@@ -6,7 +6,7 @@
 # you may not use this file except in compliance with the License.
 
 """
-This is the Trustlook WannaCry Ransomware Scanner, 
+This is the Trustlook WannaCry Ransomware Scanner,
 please check out the update on our blog:
 https://blog.trustlook.com/
 """
@@ -17,14 +17,17 @@ import sys
 from impacket import smb
 from ipaddr import IPv4Network
 
+
 def xor_key(s):
     """xor the key"""
     ret = (2 * s ^ (((s & 0xff00 | (s << 16)) << 8) | (((s >> 16) | s & 0xff0000) >> 8)))
     return ret & 0xffffffff
 
+
 def get_arch(s):
     """the platform arch"""
     return 'x86 (32-bit)' if s == 0 else 'x64 (64-bit)'
+
 
 def scan(host):
     """scan the host"""
@@ -86,19 +89,21 @@ def scan(host):
     except:
         pass
 
+
 def print_usage():
     """print usage"""
 
     message = """\
-Trustlook WannaCry Ransomware Scanner, 
+Trustlook WannaCry Ransomware Scanner,
 check out our blog https://blog.trustlook.com for udpate
 
 Usage: %s host/network
-Example: 
-    %s 192.168.0.100 
+Example:
+    %s 192.168.0.100
     %s 192.168.0.0/24""" % (sys.argv[0], sys.argv[0], sys.argv[0])
 
     print message
+
 
 def main():
     """main function"""
@@ -109,6 +114,14 @@ def main():
 
     print """Trustlook WannaCry Ransomware Scanner
 check out our blog https://blog.trustlook.com for udpate
+
+To install SEcurity Path From Microsoft:
+
+For general windows system, download at:
+https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
+
+For Windows XP, 2003, Vista and Windows 8 system, download at:
+http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598
 """
     input_network = sys.argv[1]
     hosts = []
@@ -126,6 +139,7 @@ check out our blog https://blog.trustlook.com for udpate
     pool = multiprocessing.Pool(processes=16)
     pool.map(scan, hosts)
     print "done"
+
 
 if __name__ == '__main__':
     main()

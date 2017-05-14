@@ -13,3 +13,10 @@ The WannaCry Vaccine Tool help user to prevent your system from being affected b
 
 please check out the details at [Vaccine Tool README](vaccine/README.md)
 
+## 3. Install SEcurity Path From Microsoft
+
+### For general windows system, download at:
+[https://technet.microsoft.com/en-us/library/security/ms17-010.aspx](https://technet.microsoft.com/en-us/library/security/ms17-010.aspx)
+
+### For Windows XP, 2003, Vista and Windows 8 system, download at:
+[http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598](http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598)
