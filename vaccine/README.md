@@ -28,3 +28,11 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce
 
 ## Tech details and update
 Please check out Trustlook blog at [https://blog.trustlook.com/](https://blog.trustlook.com/)
+
+## Install SEcurity Path From Microsoft
+
+### For general windows system, download at:
+[https://technet.microsoft.com/en-us/library/security/ms17-010.aspx](https://technet.microsoft.com/en-us/library/security/ms17-010.aspx)
+
+### For Windows XP, 2003, Vista and Windows 8 system, download at:
+[http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598](http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598)
