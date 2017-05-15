@@ -1,1 +1,2 @@
 impacket==0.9.15
+pycrypto==2.6.1

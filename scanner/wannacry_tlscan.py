@@ -6,17 +6,46 @@
 # you may not use this file except in compliance with the License.
 
 """
-This is the Trustlook WannaCry Ransomware Scanner,
-please check out the update on our blog:
-https://blog.trustlook.com/
+This is the Trustlook WannaCry Ransomware Scanner
 """
 import multiprocessing
+from optparse import OptionParser
 import socket
 import struct
 import sys
 from impacket import smb
 from ipaddr import IPv4Network
 
+timeout = 0.5
+def parse_options():
+    """parse options"""
+    usage = "usage: %prog [options]"
+    parser = OptionParser(usage)
+    parser.add_option('-t', '--timeout', dest='timeout', default=0.5,
+                      help="timout in seconds, default 0.5")
+    parser.add_option('-n', '--network', dest='network',
+                      help="""The scan network or host
+                            192.168.0.100 for single host
+                            192.168.0.100/24 for a network""")
+    options = parser.parse_args()[0]
+
+    message = """Trustlook WannaCry Ransomware Scanner
+Check out our blog https://blog.trustlook.com/ for udpate
+
+To install SEcurity Path From Microsoft:
+
+For general windows system, download at:
+https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
+
+For Windows XP, 2003, Vista and Windows 8 system, download at:
+http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598
+"""
+    print(message)
+    if options.network is None:
+        parser.print_help()
+        sys.exit()
+
+    return options
 
 def xor_key(s):
     """xor the key"""
@@ -32,15 +61,15 @@ def get_arch(s):
 def scan(host):
     """scan the host"""
     try:
-        s = socket.create_connection((host, 445), timeout=0.5)
+        s = socket.create_connection((host, 445), timeout=timeout)
         if s is None:
             # port is not open, ignore
             return
 
-        cs = smb.SMB('*SMBSERVER', host, sess_port=445, timeout=0.1)
+        cs = smb.SMB('*SMBSERVER', host, sess_port=445, timeout=timeout)
 
-        uid = cs.login_standard('', '')
-        tid = cs.tree_connect_andx('\\\\IPC$', '')
+        uid = cs.login('', '')
+        tid = cs.tree_connect_andx(r'\\\\IPC$', '')
         base_probe = (
             '\x00\x00\x00\x4a\xff\x53\x4d\x42\x25\x00\x00\x00\x00\x18\x01\x28'
             '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' + struct.pack('<H', tid) + '\xb9\x1b' +
@@ -76,69 +105,47 @@ def scan(host):
             except:
                 pass
             if double_infection:
-                print '%s - system is vulnerable, DoublePulsa infection - Arch: %s Key:0x%x ' % \
-                      (host, get_arch(sig2),xor_key(sig1))
+                print('%s - system is vulnerable, DoublePulsa infection - Arch: %s Key:0x%x ' % \
+                      (host, get_arch(sig2),xor_key(sig1)))
             else:
-                print '%s - system is vulnerable' % host
+                print('%s - system is vulnerable' % host)
 
         elif status == 0xc0000008 or status == 0xc0000022:
             # STATUS_INVALID_HANDLE or STATUS_ACCESS_DENIED
-            print '%s - system is not vulnerable' % host
+            print('%s - system is not vulnerable' % host)
         else:
-            print '%s - can not detect vulnerable status' % host
+            print('%s - can not detect vulnerable status' % host)
     except:
         pass
 
-
-def print_usage():
-    """print usage"""
-
-    message = """\
-Trustlook WannaCry Ransomware Scanner,
-check out our blog https://blog.trustlook.com for udpate
-
-Usage: %s host/network
-Example:
-    %s 192.168.0.100
-    %s 192.168.0.0/24""" % (sys.argv[0], sys.argv[0], sys.argv[0])
-
-    print message
-
-
 def main():
     """main function"""
+    global timeout
+    opt = parse_options()
 
-    if len(sys.argv) != 2:
-        print_usage()
-        sys.exit(-1)
+    scan_network = opt.network
+    try:
+        timeout = float(opt.timeout)
+    except ValueError:
+        timeout = 0.5
+        print("Use default timeout {}".format(timeout))
 
-    print """Trustlook WannaCry Ransomware Scanner
-check out our blog https://blog.trustlook.com for udpate
-
-To install SEcurity Path From Microsoft:
-
-For general windows system, download at:
-https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
-
-For Windows XP, 2003, Vista and Windows 8 system, download at:
-http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598
-"""
-    input_network = sys.argv[1]
     hosts = []
 
-    is_scan_network = '/' in input_network
-    if is_scan_network:
-        network = IPv4Network(input_network)
+    if '/' in scan_network:
+        network = IPv4Network(scan_network)
         for host in network.iterhosts():
             hosts.append(str(host))
-        print 'start to scan network {} for {} hosts...'.format(str(network), len(hosts))
+        print('start to scan network {} for {} hosts...'.format(str(network), len(hosts)))
+        pool = multiprocessing.Pool(processes=16)
+        pool.map(scan, hosts)
+        pool.close()
+        pool.join()
     else:
-        print 'start to scan host {}'.format(input_network)
-        hosts.append(hosts)
+        print('start to scan host {}'.format(scan_network))
+        scan(scan_network)
 
-    pool = multiprocessing.Pool(processes=16)
-    pool.map(scan, hosts)
-    print "done"
+    print("done")
 
 
 if __name__ == '__main__':
