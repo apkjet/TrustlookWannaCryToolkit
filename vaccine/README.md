@@ -1,6 +1,6 @@
 # Trustlook WannaCry Vaccine Tool
 
-The WannaCry Vaccine Tool helps users preventing their systems from being infected by WannaCry Ransomeware
+The WannaCry Vaccine Tool helps users protecting their systems from being infected by WannaCry Ransomeware
 
 ## Install and Usage
 

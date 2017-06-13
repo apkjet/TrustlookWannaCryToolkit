@@ -20,3 +20,11 @@ please check out the details at [Vaccine Tool README](vaccine/README.md)
 
 ### For Windows XP, 2003, Vista and Windows 8 system, download at:
 [http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598](http://www.catalog.update.microsoft.com/Search.aspx?q=KB4012598)
+
+## 4. Contribution
+
+James Li (jli@trustlook.com)
+Shengwei Tang (stang@trustlook.com)
+Yazhi Wang (ywang@trustlook.com)
+Lifan Xu (lxu@trustlook.com)
+Allan Zhang (azhang@trustlook.com)
