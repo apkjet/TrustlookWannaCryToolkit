@@ -1,6 +1,6 @@
 # Trustlook WannaCry Vaccine Tool
 
-The WannaCry Vaccine Tool help user to prevent your system from being affected by WannaCry Ransomeware
+The WannaCry Vaccine Tool helps users preventing their systems from being infected by WannaCry Ransomeware
 
 ## Install and Usage
 
@@ -9,15 +9,15 @@ The WannaCry Vaccine Tool help user to prevent your system from being affected b
 tl_wannacry_console.exe and tl_wannacry_no_console.exe prevent WannaCry Ransomeware to encrypt
 user's files.
 
-The two tools works pretty much the same, except tl_wannacry_console.exe comes with a console 
-to show some progress information. tl_wannacry_no_console.exe runs in background.
+The two tools work similarly, except tl_wannacry_console.exe comes with a console 
+to show progress information. tl_wannacry_no_console.exe runs in background.
 
-Users may want to add tl__wannacry_no_console.exe to Windows startup script, so everytime user
-start his computer, Trustlook WannaCry Vaccine Tool will start prevent your system from being
-affected.
+Users may want to add tl_wannacry_no_console.exe to Windows startup script, so everytime users
+start their computers, Trustlook WannaCry Vaccine Tool starts protecting their systems from being
+infected.
 
 ### 2. Add to Windows startup script
-add tl_wannacry_no_console.exe value to following register script
+add tl_wannacry_no_console.exe value to following register scripts
 
 ```
 HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run
