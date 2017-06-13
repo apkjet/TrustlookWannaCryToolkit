@@ -24,7 +24,11 @@ please check out the details at [Vaccine Tool README](vaccine/README.md)
 ## 4. Contribution
 
 James Li (jli@trustlook.com)
+
 Shengwei Tang (stang@trustlook.com)
+
 Yazhi Wang (ywang@trustlook.com)
+
 Lifan Xu (lxu@trustlook.com)
+
 Allan Zhang (azhang@trustlook.com)
